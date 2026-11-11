@@ -1,0 +1,8 @@
+import { Activity, CalendarDays, ChartNoAxesCombined, Dumbbell, LayoutDashboard, LogOut, Settings, Target } from 'lucide-react'
+export type Page = 'overview' | 'muscles' | 'planner' | 'log' | 'progress'
+const links: { id: Page; label: string; icon: typeof LayoutDashboard }[] = [
+  {id:'overview',label:'Ringkasan',icon:LayoutDashboard},{id:'muscles',label:'Katalog otot',icon:Activity},{id:'planner',label:'Planner mingguan',icon:CalendarDays},{id:'log',label:'Catat latihan',icon:Dumbbell},{id:'progress',label:'Progres',icon:ChartNoAxesCombined}
+]
+export default function Sidebar({ page, setPage, email, onSignOut }: { page: Page; setPage: (p:Page)=>void; email:string; onSignOut:()=>void }) {
+ return <aside className="sidebar"><div className="brand"><div className="brand-mark"><Dumbbell size={19}/></div><span>FORM</span><span className="brand-dot">.</span></div><div className="side-label">WORKSPACE</div><nav>{links.map(({id,label,icon:Icon})=><button key={id} className={`nav-link ${page===id?'selected':''}`} onClick={()=>setPage(id)}><Icon size={18}/><span>{label}</span>{page===id&&<span className="nav-indicator"/>}</button>)}</nav><div className="side-bottom"><div className="coach-card"><div className="coach-icon"><Target size={18}/></div><strong>Stay consistent.</strong><p>Progress is built rep by rep.</p><div className="coach-line"><span/></div></div><div className="profile-row"><div className="avatar">{email.slice(0,1).toUpperCase()}</div><div className="profile-text"><strong>{email.split('@')[0]}</strong><span>{email}</span></div><button className="icon-button" title="Keluar" onClick={onSignOut}><LogOut size={17}/></button></div></div></aside>
+}
